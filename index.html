@@ -3,220 +3,183 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MC Proxy Service - Hide Your IP Free</title>
-  <meta name="description" content="Simple free Minecraft server proxy demo - hide your home IP."/>
+  <title>Free Minecraft Subdomain Helper</title>
   <style>
-    :root {
-      --bg: #0f0f1a;
-      --card: #1a1a2e;
-      --green: #00ff9d;
-      --green-dark: #00cc7a;
-      --text: #e0e0ff;
-      --gray: #a0a0cc;
-    }
-    * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #0f0f1a;
+      color: #e0e0ff;
+      margin: 0;
+      padding: 0;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 20px;
+    }
+    header {
+      background: linear-gradient(135deg, #1a1a3d, #0d0d1f);
+      width: 100%;
+      text-align: center;
+      padding: 2.5rem 1rem 1.5rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
     }
     h1 {
-      font-size: 3.5rem;
-      color: var(--green);
-      margin-bottom: 1rem;
-      text-shadow: 0 0 20px rgba(0,255,157,0.5);
+      margin: 0;
+      font-size: 2.6rem;
+      background: linear-gradient(90deg, #a78bfa, #7dd3fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    p.intro {
-      font-size: 1.3rem;
-      max-width: 600px;
-      text-align: center;
-      margin-bottom: 2.5rem;
-      color: var(--gray);
-    }
-    .card {
-      background: var(--card);
+    .container {
+      max-width: 520px;
+      width: 90%;
+      background: #141426;
       border-radius: 16px;
-      padding: 2.5rem;
-      width: 100%;
-      max-width: 480px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-      border: 1px solid #333366;
+      padding: 2rem;
+      margin: 2rem auto;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      border: 1px solid #2a2a4a;
     }
     label {
       display: block;
-      margin-bottom: 0.6rem;
-      font-size: 1.1rem;
-      color: var(--gray);
+      margin: 1.4rem 0 0.5rem;
+      font-weight: 600;
+      color: #c4c4ff;
     }
-    input {
+    input, button {
       width: 100%;
-      padding: 14px;
-      margin-bottom: 1.4rem;
-      background: #222244;
-      border: 1px solid #444466;
+      padding: 0.9rem 1.1rem;
       border-radius: 8px;
+      border: 1px solid #3a3a5a;
+      background: #1e1e38;
       color: white;
-      font-size: 1.1rem;
+      font-size: 1rem;
+      margin-top: 0.3rem;
+      box-sizing: border-box;
     }
     input:focus {
       outline: none;
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(0,255,157,0.2);
+      border-color: #8b5cf6;
+      box-shadow: 0 0 0 3px rgba(139,92,246,0.2);
     }
     button {
-      width: 100%;
-      padding: 16px;
-      font-size: 1.4rem;
-      font-weight: bold;
-      background: var(--green);
-      color: black;
+      background: linear-gradient(90deg, #7c3aed, #3b82f6);
       border: none;
-      border-radius: 10px;
+      font-weight: bold;
       cursor: pointer;
+      margin-top: 1.8rem;
       transition: all 0.2s;
     }
     button:hover {
-      background: var(--green-dark);
       transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(59,130,246,0.4);
     }
-    .result {
-      text-align: center;
-    }
-    .proxy-url {
-      background: #222244;
-      padding: 16px;
+    #result {
+      margin-top: 2rem;
+      padding: 1.2rem;
+      background: #1a1a2e;
       border-radius: 10px;
-      font-family: monospace;
-      font-size: 1.4rem;
-      word-break: break-all;
-      margin: 1.5rem 0;
-      border: 2px dashed var(--green);
+      border-left: 4px solid #8b5cf6;
+      display: none;
     }
-    .copy-btn {
-      background: #444466;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-      margin-top: 1rem;
+    code {
+      background: #0d0d1f;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Consolas', monospace;
     }
-    .copy-btn:hover { background: #666688; }
-    .reset-btn {
-      background: #ff3366;
-      margin-top: 2rem;
-      font-size: 1.1rem;
-    }
-    .reset-btn:hover { background: #cc294d; }
     .note {
-      margin-top: 2rem;
-      font-size: 0.95rem;
-      color: #8888aa;
-      text-align: center;
-      max-width: 500px;
+      font-size: 0.92rem;
+      color: #a0a0c0;
+      margin-top: 2.5rem;
+      line-height: 1.5;
     }
     footer {
-      margin-top: 4rem;
-      color: #666688;
+      margin-top: auto;
+      padding: 2rem;
+      text-align: center;
+      color: #707090;
       font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
 
-  <h1>MC Proxy Service</h1>
-  <p class="intro">Hide your home Minecraft server IP for free. Enter details → get your custom proxy address (demo mode).</p>
+<header>
+  <h1>Minecraft Subdomain Helper</h1>
+  <p style="margin: 0.6rem 0 0; opacity: 0.9;">Make cool addresses like <strong>epic.playmycool.xyz</strong></p>
+</header>
 
-  <div class="card" id="form-card">
-    <form id="proxy-form">
-      <label for="ip">Server IP (home/public)</label>
-      <input type="text" id="ip" placeholder="e.g. 192.168.1.100 or 85.214.12.34" required/>
+<div class="container">
+  <form id="subdomainForm">
+    <label for="name">Desired subdomain name</label>
+    <input type="text" id="name" placeholder="coolserver" required pattern="[a-zA-Z0-9-]{3,20}" title="3–20 letters, numbers or - only" />
 
-      <label for="port">Port (default 25565)</label>
-      <input type="text" id="port" placeholder="25565" value="25565"/>
+    <label for="ip">Your Minecraft server IP</label>
+    <input type="text" id="ip" placeholder="123.45.67.89 or mc.example.com" required />
 
-      <button type="submit">Start for Free</button>
-    </form>
-  </div>
+    <label for="port">Server port (default 25565)</label>
+    <input type="number" id="port" placeholder="25565" value="25565" min="1" max="65535" required />
 
-  <div class="card result" id="result-card" style="display:none;">
-    <h2 style="color:var(--green); margin-bottom:1rem;">Your Proxy is Ready!</h2>
-    <p>Connect in Minecraft to:</p>
-    <div class="proxy-url" id="proxy-display"></div>
-    <button class="copy-btn" id="copy-btn">Copy Address</button>
-    <button class="reset-btn" id="reset-btn">Reset / New Proxy</button>
+    <button type="submit">Generate Instructions →</button>
+  </form>
+
+  <div id="result">
+    <h3 style="margin-top:0; color:#c084fc">Your custom setup</h3>
+    <p>Your players will connect using: <strong id="displayName"></strong></p>
+
+    <p><strong>Manual DNS steps (Cloudflare / similar):</strong></p>
+    <ol style="padding-left:1.3rem; line-height:1.7;">
+      <li>Add an <code>A</code> or <code>CNAME</code> record for your real server:<br>
+        Name: <code id="targetHost"></code><br>
+        Value: <strong id="targetValue"></strong>
+      </li>
+      <li>Add this <code>SRV</code> record:<br>
+        Service: <code>_minecraft</code><br>
+        Protocol: <code>_tcp</code><br>
+        Name: <strong id="srvName"></strong><br>
+        Priority: 0<br>
+        Weight: 0<br>
+        Port: <strong id="srvPort"></strong><br>
+        Target: <strong id="srvTarget"></strong><br>
+        TTL: Auto
+      </li>
+    </ol>
+    <p class="note">Most people use Cloudflare (free) → add your domain there and create these two records. Done in ~2 minutes.</p>
   </div>
 
   <p class="note">
-    This is a <strong>demo</strong> using browser storage only.<br>
-    Real proxy needs tools like playit.gg, ngrok, or a VPS.<br>
-    No actual forwarding happens here — just a fun frontend.
+    This is a helper tool — it doesn't create records automatically (yet).<br>
+    Want auto-creation later? Add Cloudflare API + serverless backend.
   </p>
+</div>
 
-  <footer>Hosted on Vercel • GitHub + Vercel magic • 2026</footer>
+<footer>
+  Made with ❤️ • Deploy on Vercel • 2026
+</footer>
 
-  <script>
-    const form = document.getElementById('proxy-form');
-    const formCard = document.getElementById('form-card');
-    const resultCard = document.getElementById('result-card');
-    const proxyDisplay = document.getElementById('proxy-display');
-    const copyBtn = document.getElementById('copy-btn');
-    const resetBtn = document.getElementById('reset-btn');
+<script>
+  document.getElementById('subdomainForm').addEventListener('submit', function(e) {
+    e.preventDefault();
 
-    // Load saved data on page load
-    window.addEventListener('load', () => {
-      const saved = localStorage.getItem('mcProxyData');
-      if (saved) {
-        const data = JSON.parse(saved);
-        showResult(data.ip, data.port);
-      }
-    });
+    const name   = document.getElementById('name').value.trim().toLowerCase();
+    const ip     = document.getElementById('ip').value.trim();
+    const port   = document.getElementById('port').value;
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const ip = document.getElementById('ip').value.trim();
-      const port = document.getElementById('port').value.trim() || '25565';
+    // Very basic IP / domain check (you can improve)
+    const looksLikeDomain = ip.includes('.') || ip.includes(':');
 
-      if (!ip) return alert('Enter an IP bro');
+    document.getElementById('displayName').textContent = `${name}.yourdomain.com`; // ← change yourdomain.com !
+    document.getElementById('targetHost').textContent  = name;
+    document.getElementById('targetValue').textContent = ip;
+    document.getElementById('srvName').textContent     = name;
+    document.getElementById('srvPort').textContent     = port;
+    document.getElementById('srvTarget').textContent   = `${name}.yourdomain.com.`; // trailing dot often needed
 
-      const data = { ip, port };
-      localStorage.setItem('mcProxyData', JSON.stringify(data));
-
-      showResult(ip, port);
-    });
-
-    function showResult(ip, port) {
-      // Create fake unique subdomain (replace dots + random string)
-      const randomPart = Math.random().toString(36).substring(2, 8);
-      const cleanIp = ip.replace(/\./g, '-').replace(/[^a-z0-9-]/gi, '');
-      const proxyAddr = `${cleanIp}-${randomPart}.mcproxy.vercel.app`;
-
-      proxyDisplay.textContent = proxyAddr + (port !== '25565' ? `:${port}` : '');
-
-      formCard.style.display = 'none';
-      resultCard.style.display = 'block';
-    }
-
-    copyBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText(proxyDisplay.textContent)
-        .then(() => alert('Copied! Paste in Minecraft.'))
-        .catch(() => alert('Copy failed - select manually.'));
-    });
-
-    resetBtn.addEventListener('click', () => {
-      localStorage.removeItem('mcProxyData');
-      formCard.style.display = 'block';
-      resultCard.style.display = 'none';
-      form.reset();
-    });
-  </script>
+    document.getElementById('result').style.display = 'block';
+    document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
 
 </body>
 </html>
